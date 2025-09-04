@@ -52,6 +52,20 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// HugMe Design System
+				hugme: {
+					DEFAULT: 'hsl(var(--hugme-green))',
+					light: 'hsl(var(--hugme-green-light))',
+					dark: 'hsl(var(--hugme-green-dark))'
+				},
+				alert: {
+					red: 'hsl(var(--alert-red))',
+					orange: 'hsl(var(--alert-orange))'
+				},
+				surface: {
+					light: 'hsl(var(--surface-light))',
+					medium: 'hsl(var(--surface-medium))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
