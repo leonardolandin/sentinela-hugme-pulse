@@ -7,6 +7,7 @@ import { ReputationChart } from "./ReputationChart";
 import { AlertsPanel } from "./AlertsPanel";
 import { TrendingTopics } from "./TrendingTopics";
 import { ActivityFeed } from "./ActivityFeed";
+import { FloatingChat } from "./FloatingChat";
 
 export const Dashboard = () => {
   const [period, setPeriod] = useState("30-dias");
@@ -90,6 +91,9 @@ export const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* Floating Chat */}
+      <FloatingChat />
     </div>
   );
 };
