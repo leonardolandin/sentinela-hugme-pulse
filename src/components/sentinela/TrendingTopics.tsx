@@ -1,52 +1,80 @@
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-const topics = [
-  {
-    name: "Sustentabilidade",
-    mentions: 2847,
-    change: 120,
-    sentiment: "positive",
-    trend: "up"
-  },
-  {
-    name: "Atraso na Entrega",
-    mentions: 1923,
-    change: -15,
-    sentiment: "negative", 
-    trend: "down"
-  },
-  {
-    name: "Atendimento",
-    mentions: 1456,
-    change: 8,
-    sentiment: "neutral",
-    trend: "up"
-  },
-  {
-    name: "Qualidade do Produto",
-    mentions: 1203,
-    change: 45,
-    sentiment: "positive",
-    trend: "up"
-  },
-  {
-    name: "Preço Justo",
-    mentions: 987,
-    change: -22,
-    sentiment: "neutral",
-    trend: "down"
-  },
-  {
-    name: "Inovação",
-    mentions: 743,
-    change: 67,
-    sentiment: "positive",
-    trend: "up"
-  }
-];
+interface TrendingTopicsProps {
+  period: string;
+}
 
-export const TrendingTopics = () => {
+const getTopicsData = (period: string) => {
+  const topicsConfigs = {
+    "24h": [
+      { name: "Produto Novo", mentions: 234, change: 45, sentiment: "positive", trend: "up" },
+      { name: "Entrega Rápida", mentions: 156, change: 12, sentiment: "positive", trend: "up" },
+      { name: "Atendimento", mentions: 98, change: -8, sentiment: "neutral", trend: "down" }
+    ],
+    "7-dias": [
+      { name: "Black Friday", mentions: 1247, change: 89, sentiment: "positive", trend: "up" },
+      { name: "Frete Grátis", mentions: 892, change: 34, sentiment: "positive", trend: "up" },
+      { name: "Prazo", mentions: 654, change: -12, sentiment: "negative", trend: "down" },
+      { name: "Qualidade", mentions: 534, change: 23, sentiment: "positive", trend: "up" }
+    ],
+    "30-dias": [
+      {
+        name: "Sustentabilidade",
+        mentions: 2847,
+        change: 120,
+        sentiment: "positive",
+        trend: "up"
+      },
+      {
+        name: "Atraso na Entrega",
+        mentions: 1923,
+        change: -15,
+        sentiment: "negative", 
+        trend: "down"
+      },
+      {
+        name: "Atendimento",
+        mentions: 1456,
+        change: 8,
+        sentiment: "neutral",
+        trend: "up"
+      },
+      {
+        name: "Qualidade do Produto",
+        mentions: 1203,
+        change: 45,
+        sentiment: "positive",
+        trend: "up"
+      },
+      {
+        name: "Preço Justo",
+        mentions: 987,
+        change: -22,
+        sentiment: "neutral",
+        trend: "down"
+      },
+      {
+        name: "Inovação",
+        mentions: 743,
+        change: 67,
+        sentiment: "positive",
+        trend: "up"
+      }
+    ],
+    "90-dias": [
+      { name: "Transformação Digital", mentions: 8743, change: 156, sentiment: "positive", trend: "up" },
+      { name: "Sustentabilidade", mentions: 7234, change: 89, sentiment: "positive", trend: "up" },
+      { name: "Logística", mentions: 5892, change: -34, sentiment: "negative", trend: "down" },
+      { name: "Experiência Cliente", mentions: 4567, change: 67, sentiment: "positive", trend: "up" }
+    ]
+  };
+
+  return topicsConfigs[period as keyof typeof topicsConfigs] || topicsConfigs["30-dias"];
+};
+
+export const TrendingTopics = ({ period }: TrendingTopicsProps) => {
+  const topics = getTopicsData(period);
   const getSentimentColor = (sentiment: string) => {
     switch (sentiment) {
       case "positive":

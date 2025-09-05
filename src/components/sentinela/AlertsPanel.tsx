@@ -2,42 +2,91 @@ import { AlertTriangle, Clock, CheckCircle, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const alerts = [
-  {
-    id: 1,
-    type: "critical",
-    title: "Pico de Reclamações Detectado",
-    description: "Aumento de 85% em menções negativas sobre 'Atraso na Entrega'",
-    time: "há 2 horas",
-    status: "active"
-  },
-  {
-    id: 2,
-    type: "warning",
-    title: "Tendência Negativa",
-    description: "Score de reputação em declínio nos últimos 3 dias (-0.2 pontos)",
-    time: "há 4 horas",
-    status: "active"
-  },
-  {
-    id: 3,
-    type: "info",
-    title: "Novo Tópico Emergente",
-    description: "Menções sobre 'Sustentabilidade' aumentaram 120%",
-    time: "há 6 horas",
-    status: "resolved"
-  },
-  {
-    id: 4,
-    type: "critical",
-    title: "Crise de Imagem Potencial",
-    description: "Hashtag negativa ganhando tração no Twitter",
-    time: "há 1 dia",
-    status: "dismissed"
-  }
-];
+interface AlertsPanelProps {
+  period: string;
+}
 
-export const AlertsPanel = () => {
+const getAlertsData = (period: string) => {
+  const alertsConfigs = {
+    "24h": [
+      {
+        id: 1,
+        type: "critical",
+        title: "Pico Recente de Menções",
+        description: "Aumento de 35% nas últimas 6 horas sobre 'Produto Novo'",
+        time: "há 2 horas",
+        status: "active"
+      }
+    ],
+    "7-dias": [
+      {
+        id: 1,
+        type: "warning",
+        title: "Tendência Semanal",
+        description: "Queda de 12% na satisfação nos últimos 7 dias",
+        time: "há 1 dia",
+        status: "active"
+      },
+      {
+        id: 2,
+        type: "info",
+        title: "Novo Tópico Emergente",
+        description: "Menções sobre 'Entrega Rápida' aumentaram esta semana",
+        time: "há 2 dias",
+        status: "resolved"
+      }
+    ],
+    "30-dias": [
+      {
+        id: 1,
+        type: "critical",
+        title: "Pico de Reclamações Detectado",
+        description: "Aumento de 85% em menções negativas sobre 'Atraso na Entrega'",
+        time: "há 2 horas",
+        status: "active"
+      },
+      {
+        id: 2,
+        type: "warning",
+        title: "Tendência Negativa",
+        description: "Score de reputação em declínio nos últimos 3 dias (-0.2 pontos)",
+        time: "há 4 horas",
+        status: "active"
+      },
+      {
+        id: 3,
+        type: "info",
+        title: "Novo Tópico Emergente",
+        description: "Menções sobre 'Sustentabilidade' aumentaram 120%",
+        time: "há 6 horas",
+        status: "resolved"
+      }
+    ],
+    "90-dias": [
+      {
+        id: 1,
+        type: "critical",
+        title: "Padrão Trimestral Detectado",
+        description: "Ciclo de reclamações se repete a cada 30 dias",
+        time: "há 1 semana",
+        status: "active"
+      },
+      {
+        id: 2,
+        type: "warning",
+        title: "Declínio Gradual",
+        description: "Score médio caiu 0.8 pontos no trimestre",
+        time: "há 2 semanas",
+        status: "active"
+      }
+    ]
+  };
+
+  return alertsConfigs[period as keyof typeof alertsConfigs] || alertsConfigs["30-dias"];
+};
+
+export const AlertsPanel = ({ period }: AlertsPanelProps) => {
+  const alerts = getAlertsData(period);
   const getAlertIcon = (type: string) => {
     switch (type) {
       case "critical":

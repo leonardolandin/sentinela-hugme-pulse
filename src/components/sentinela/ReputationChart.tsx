@@ -1,16 +1,49 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Area, AreaChart } from 'recharts';
 
-const data = [
-  { name: 'Jan', score: 7.2, mentions: 1200 },
-  { name: 'Fev', score: 7.8, mentions: 1400 },
-  { name: 'Mar', score: 7.5, mentions: 1100 },
-  { name: 'Abr', score: 8.1, mentions: 1600 },
-  { name: 'Mai', score: 8.4, mentions: 1800 },
-  { name: 'Jun', score: 8.0, mentions: 1500 },
-  { name: 'Jul', score: 8.2, mentions: 1700 },
-];
+interface ReputationChartProps {
+  period: string;
+}
 
-export const ReputationChart = () => {
+const getChartData = (period: string) => {
+  const chartConfigs = {
+    "24h": [
+      { name: "00h", score: 8.1, mentions: 45 },
+      { name: "04h", score: 8.2, mentions: 32 },
+      { name: "08h", score: 8.0, mentions: 78 },
+      { name: "12h", score: 8.3, mentions: 95 },
+      { name: "16h", score: 8.2, mentions: 82 },
+      { name: "20h", score: 8.3, mentions: 67 }
+    ],
+    "7-dias": [
+      { name: "Seg", score: 7.8, mentions: 320 },
+      { name: "Ter", score: 8.0, mentions: 410 },
+      { name: "Qua", score: 7.9, mentions: 380 },
+      { name: "Qui", score: 8.1, mentions: 445 },
+      { name: "Sex", score: 8.2, mentions: 520 },
+      { name: "Sáb", score: 8.0, mentions: 290 },
+      { name: "Dom", score: 8.1, mentions: 350 }
+    ],
+    "30-dias": [
+      { name: 'Jan', score: 7.2, mentions: 1200 },
+      { name: 'Fev', score: 7.8, mentions: 1400 },
+      { name: 'Mar', score: 7.5, mentions: 1100 },
+      { name: 'Abr', score: 8.1, mentions: 1600 },
+      { name: 'Mai', score: 8.4, mentions: 1800 },
+      { name: 'Jun', score: 8.0, mentions: 1500 },
+      { name: 'Jul', score: 8.2, mentions: 1700 }
+    ],
+    "90-dias": [
+      { name: "Jan", score: 7.3, mentions: 3200 },
+      { name: "Fev", score: 7.6, mentions: 3800 },
+      { name: "Mar", score: 8.0, mentions: 4200 }
+    ]
+  };
+
+  return chartConfigs[period as keyof typeof chartConfigs] || chartConfigs["30-dias"];
+};
+
+export const ReputationChart = ({ period }: ReputationChartProps) => {
+  const data = getChartData(period);
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm border border-border">
       <div className="flex items-center justify-between mb-6">

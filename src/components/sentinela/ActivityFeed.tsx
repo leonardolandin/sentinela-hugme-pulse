@@ -1,60 +1,137 @@
 import { MessageCircle, Share2, Heart, AlertTriangle, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-const activities = [
-  {
-    id: 1,
-    type: "mention",
-    platform: "Twitter",
-    content: "Adorei o novo produto! Qualidade excepcional e entrega rápida. Recomendo! 👏",
-    user: "@maria_silva",
-    time: "há 5 min",
-    sentiment: "positive",
-    engagement: 23
-  },
-  {
-    id: 2,
-    type: "complaint",
-    platform: "ReclameAQUI", 
-    content: "Comprei há 2 semanas e ainda não recebi. Atendimento não resolve...",
-    user: "João M.",
-    time: "há 12 min", 
-    sentiment: "negative",
-    engagement: 8
-  },
-  {
-    id: 3,
-    type: "review",
-    platform: "Google",
-    content: "Empresa confiável, já comprei várias vezes. Produtos de qualidade.",
-    user: "Ana Costa",
-    time: "há 23 min",
-    sentiment: "positive", 
-    engagement: 15
-  },
-  {
-    id: 4,
-    type: "alert",
-    platform: "Sistema",
-    content: "Novo cluster de reclamações detectado sobre 'Cobrança Indevida'",
-    user: "Sentinela AI",
-    time: "há 35 min",
-    sentiment: "alert",
-    engagement: 0
-  },
-  {
-    id: 5,
-    type: "trending",
-    platform: "Instagram",
-    content: "Postagem sobre sustentabilidade ganhou 500+ curtidas em 1 hora",
-    user: "Monitor Trends",
-    time: "há 1h",
-    sentiment: "positive",
-    engagement: 532
-  }
-];
+interface ActivityFeedProps {
+  period: string;
+}
 
-export const ActivityFeed = () => {
+const getActivitiesData = (period: string) => {
+  const activitiesConfigs = {
+    "24h": [
+      {
+        id: 1,
+        type: "mention",
+        platform: "Twitter",
+        content: "Produto incrível! Chegou no prazo. Muito satisfeita! 🎉",
+        user: "@cliente_feliz",
+        time: "há 15 min",
+        sentiment: "positive",
+        engagement: 8
+      },
+      {
+        id: 2,
+        type: "trending",
+        platform: "Instagram",
+        content: "Story sobre o novo produto teve 200+ visualizações",
+        user: "Monitor Trends",
+        time: "há 45 min",
+        sentiment: "positive",
+        engagement: 200
+      }
+    ],
+    "7-dias": [
+      {
+        id: 1,
+        type: "review",
+        platform: "Google",
+        content: "Excelente experiência de compra. Recomendo para todos!",
+        user: "Maria Silva",
+        time: "há 2 dias",
+        sentiment: "positive",
+        engagement: 12
+      },
+      {
+        id: 2,
+        type: "complaint",
+        platform: "ReclameAQUI",
+        content: "Produto chegou com defeito. Solicitei troca há 3 dias...",
+        user: "João S.",
+        time: "há 3 dias",
+        sentiment: "negative",
+        engagement: 5
+      }
+    ],
+    "30-dias": [
+      {
+        id: 1,
+        type: "mention",
+        platform: "Twitter",
+        content: "Adorei o novo produto! Qualidade excepcional e entrega rápida. Recomendo! 👏",
+        user: "@maria_silva",
+        time: "há 5 min",
+        sentiment: "positive",
+        engagement: 23
+      },
+      {
+        id: 2,
+        type: "complaint",
+        platform: "ReclameAQUI", 
+        content: "Comprei há 2 semanas e ainda não recebi. Atendimento não resolve...",
+        user: "João M.",
+        time: "há 12 min", 
+        sentiment: "negative",
+        engagement: 8
+      },
+      {
+        id: 3,
+        type: "review",
+        platform: "Google",
+        content: "Empresa confiável, já comprei várias vezes. Produtos de qualidade.",
+        user: "Ana Costa",
+        time: "há 23 min",
+        sentiment: "positive", 
+        engagement: 15
+      },
+      {
+        id: 4,
+        type: "alert",
+        platform: "Sistema",
+        content: "Novo cluster de reclamações detectado sobre 'Cobrança Indevida'",
+        user: "Sentinela AI",
+        time: "há 35 min",
+        sentiment: "alert",
+        engagement: 0
+      },
+      {
+        id: 5,
+        type: "trending",
+        platform: "Instagram",
+        content: "Postagem sobre sustentabilidade ganhou 500+ curtidas em 1 hora",
+        user: "Monitor Trends",
+        time: "há 1h",
+        sentiment: "positive",
+        engagement: 532
+      }
+    ],
+    "90-dias": [
+      {
+        id: 1,
+        type: "alert",
+        platform: "Sistema",
+        content: "Padrão sazonal detectado: pico de reclamações sempre no final do mês",
+        user: "Sentinela AI",
+        time: "há 1 semana",
+        sentiment: "alert",
+        engagement: 0
+      },
+      {
+        id: 2,
+        type: "trending",
+        platform: "LinkedIn",
+        content: "Artigo sobre sustentabilidade corporativa teve 2K+ visualizações",
+        user: "Monitor Trends",
+        time: "há 2 semanas",
+        sentiment: "positive",
+        engagement: 2100
+      }
+    ]
+  };
+
+  return activitiesConfigs[period as keyof typeof activitiesConfigs] || activitiesConfigs["30-dias"];
+};
+
+export const ActivityFeed = ({ period }: ActivityFeedProps) => {
+  const activities = getActivitiesData(period);
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "mention":
